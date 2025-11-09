@@ -202,11 +202,6 @@ body {
 }
 .overlay button:disabled { opacity:.5; cursor:not-allowed; }
 
-@media (max-width:768px){
-  .timer-container{grid-template-columns:1fr;}
-  .header-section h1{font-size:24px;}
-}
-
 .loading{
   display:inline-block;width:20px;height:20px;
   border:3px solid rgba(255,255,255,0.3);
@@ -357,6 +352,10 @@ function startTimer(btn,time,i){
         }else{
           showOverlay();
           window.open(smartLink,"_blank");
+          btn.textContent="❌ Belum Beruntung";
+          btn.style.background="linear-gradient(135deg,#dc2626 0%,#b91c1c 100%)";
+          btn.style.borderColor="#ef4444";
+          btn.classList.remove('active');
         }
       };
     }
@@ -396,7 +395,10 @@ function showOverlay(){
     }
   },1000);
 }
-function closeOverlay(){document.getElementById("adOverlay").style.display="none";}
+
+function closeOverlay(){
+  document.getElementById("adOverlay").style.display="none";
+}
 document.getElementById('closeOverlayBtn').onclick=closeOverlay;
 </script>
 </body>
