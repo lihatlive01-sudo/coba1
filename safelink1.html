@@ -179,21 +179,13 @@ body {
   transition: left 0.5s;
 }
 
-.timer-btn:hover::before {
-  left: 100%;
-}
-
+.timer-btn:hover::before { left: 100%; }
 .timer-btn:hover {
   transform: translateY(-5px) scale(1.05);
   box-shadow: 0 8px 30px rgba(59, 130, 246, 0.5);
   border-color: #93c5fd;
 }
-
-.timer-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
-}
+.timer-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
 .timer-btn.active {
   background: linear-gradient(135deg, #059669 0%, #10b981 100%);
@@ -202,12 +194,8 @@ body {
 }
 
 @keyframes pulse {
-  0%, 100% { 
-    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
-  }
-  50% { 
-    box-shadow: 0 8px 40px rgba(16, 185, 129, 0.7);
-  }
+  0%, 100% { box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4); }
+  50% { box-shadow: 0 8px 40px rgba(16, 185, 129, 0.7); }
 }
 
 /* Overlay */
@@ -258,23 +246,13 @@ body {
   box-shadow: 0 6px 30px rgba(236, 72, 153, 0.6);
 }
 
-.overlay button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
+.overlay button:disabled { opacity: 0.5; cursor: not-allowed; }
 
-/* Responsive */
 @media (max-width: 768px) {
-  .timer-container {
-    grid-template-columns: 1fr;
-  }
-  
-  .header-section h1 {
-    font-size: 24px;
-  }
+  .timer-container { grid-template-columns: 1fr; }
+  .header-section h1 { font-size: 24px; }
 }
 
-/* Loading Spinner */
 .loading {
   display: inline-block;
   width: 20px;
@@ -285,115 +263,72 @@ body {
   animation: spin 1s linear infinite;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
+@keyframes spin { to { transform: rotate(360deg); } }
 </style>
 </head>
 <body>
 
 <div class="content-wrapper">
-  <!-- Header Section -->
   <div class="header-section">
     <h1>⏳ Continue to Download</h1>
     <p>Mohon tunggu dan lihat iklan sponsor kami untuk melanjutkan download</p>
   </div>
 
-  <!-- Ad Container 1: Banner 300x250 -->
   <div class="ad-container" id="adContainer1">
     <div class="ad-label">Sponsor Advertisement</div>
     <div class="ad-content">
-      <script type="text/javascript">
-        atOptions = {
-          'key' : 'fe0c4ae1791e506f7b1558972b878705',
-          'format' : 'iframe',
-          'height' : 250,
-          'width' : 300,
-          'params' : {}
-        };
-      </script>
-      <script type="text/javascript" src="//www.highperformanceformat.com/fe0c4ae1791e506f7b1558972b878705/invoke.js"></script>
+      <script>atOptions={'key':'fe0c4ae1791e506f7b1558972b878705','format':'iframe','height':250,'width':300,'params':{}};</script>
+      <script src="//www.highperformanceformat.com/fe0c4ae1791e506f7b1558972b878705/invoke.js"></script>
     </div>
     <div class="countdown-timer" id="countdown1">
-      <span class="icon">⏱️</span>
-      <span>Tunggu <strong id="timer1">10</strong> detik</span>
+      <span class="icon">⏱️</span><span>Tunggu <strong id="timer1">10</strong> detik</span>
     </div>
   </div>
 
-  <!-- Instruction Box -->
   <div class="instruction-box">
     <h3>📌 Cara Melanjutkan:</h3>
-    <p>1. Tunggu hingga semua timer iklan selesai<br>
-    2. Pilih salah satu tombol di bawah<br>
-    3. Salah satu tombol akan membawa Anda ke langkah berikutnya!</p>
+    <p>1. Tunggu hingga semua timer iklan selesai<br>2. Pilih salah satu tombol di bawah<br>3. Salah satu tombol akan membawa Anda ke langkah berikutnya!</p>
   </div>
 
-  <!-- Ad Container 2: Native Banner 4:1 -->
   <div class="ad-container" id="adContainer2">
     <div class="ad-label">Featured Content</div>
     <div class="ad-content">
-      <script async="async" data-cfasync="false" src="//pl28014399.effectivegatecpm.com/d766b94dacbdcb1a47c99b9f9bdd27a8/invoke.js"></script>
+      <script async data-cfasync="false" src="//pl28014399.effectivegatecpm.com/d766b94dacbdcb1a47c99b9f9bdd27a8/invoke.js"></script>
       <div id="container-d766b94dacbdcb1a47c99b9f9bdd27a8"></div>
     </div>
     <div class="countdown-timer" id="countdown2">
-      <span class="icon">⏱️</span>
-      <span>Tunggu <strong id="timer2">12</strong> detik</span>
+      <span class="icon">⏱️</span><span>Tunggu <strong id="timer2">12</strong> detik</span>
     </div>
   </div>
 
-  <!-- Timer Buttons -->
   <div class="timer-container" id="timers"></div>
 
-  <!-- Ad Container 3: Banner 300x250 -->
   <div class="ad-container" id="adContainer3">
     <div class="ad-label">Partner Advertisement</div>
     <div class="ad-content">
-      <script type="text/javascript">
-        atOptions = {
-          'key' : 'fe0c4ae1791e506f7b1558972b878705',
-          'format' : 'iframe',
-          'height' : 250,
-          'width' : 300,
-          'params' : {}
-        };
-      </script>
-      <script type="text/javascript" src="//www.highperformanceformat.com/fe0c4ae1791e506f7b1558972b878705/invoke.js"></script>
+      <script>atOptions={'key':'fe0c4ae1791e506f7b1558972b878705','format':'iframe','height':250,'width':300,'params':{}};</script>
+      <script src="//www.highperformanceformat.com/fe0c4ae1791e506f7b1558972b878705/invoke.js"></script>
     </div>
     <div class="countdown-timer" id="countdown3">
-      <span class="icon">⏱️</span>
-      <span>Tunggu <strong id="timer3">8</strong> detik</span>
+      <span class="icon">⏱️</span><span>Tunggu <strong id="timer3">8</strong> detik</span>
     </div>
   </div>
 </div>
 
-<!-- Overlay Popup -->
 <div class="overlay" id="adOverlay">
   <div class="overlay-content">
     <h3>🎯 Iklan Sponsor</h3>
-    <p style="color: #cbd5e1; margin-bottom: 20px;">Terima kasih telah mendukung kami dengan melihat iklan ini</p>
-    
-    <script type="text/javascript">
-      atOptions = {
-        'key' : 'fe0c4ae1791e506f7b1558972b878705',
-        'format' : 'iframe',
-        'height' : 250,
-        'width' : 300,
-        'params' : {}
-      };
-    </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/fe0c4ae1791e506f7b1558972b878705/invoke.js"></script>
-    
+    <p style="color:#cbd5e1;margin-bottom:20px;">Terima kasih telah mendukung kami dengan melihat iklan ini</p>
+    <script>atOptions={'key':'fe0c4ae1791e506f7b1558972b878705','format':'iframe','height':250,'width':300,'params':{}};</script>
+    <script src="//www.highperformanceformat.com/fe0c4ae1791e506f7b1558972b878705/invoke.js"></script>
     <button id="closeOverlayBtn" disabled>
       <span class="loading"></span> Tunggu <span id="overlayTimer">5</span> detik
     </button>
   </div>
 </div>
 
-<!-- Social Bar -->
-<script type='text/javascript' src='//pl28014407.effectivegatecpm.com/52/62/5a/52625a84e5cc480ed8f5abfb3b53e58a.js'></script>
-
-<!-- Popunder -->
-<script type='text/javascript' src='//pl28014410.effectivegatecpm.com/77/6b/17/776b17db92afc5094913dfbdb3d9d036.js'></script>
+<script src='//pl28014407.effectivegatecpm.com/52/62/5a/52625a84e5cc480ed8f5abfb3b53e58a.js'></script>
+<script src='//pl28014410.effectivegatecpm.com/77/6b/17/776b17db92afc5094913dfbdb3d9d036.js'></script>
 
 <script>
 const times = [10, 12, 15];
@@ -402,123 +337,86 @@ const timersDiv = document.getElementById("timers");
 const encoded = location.hash.split('=')[1];
 const smartLink = "https://www.effectivegatecpm.com/dsb6nckr?key=0b69c9d0a8b1cf8e8083fda807b5ad27";
 
-let allAdsViewed = false;
-let ad1Done = false;
-let ad2Done = false;
-let ad3Done = false;
+let ad1Done=false,ad2Done=false,ad3Done=false,allAdsViewed=false;
 
-// Countdown untuk Ad 1
-let countdown1 = 10;
-const timer1Interval = setInterval(() => {
-  countdown1--;
-  document.getElementById('timer1').textContent = countdown1;
-  if (countdown1 <= 0) {
-    clearInterval(timer1Interval);
-    document.getElementById('countdown1').innerHTML = '<span class="icon">✅</span><span>Selesai!</span>';
-    document.getElementById('countdown1').classList.add('completed');
-    ad1Done = true;
-    checkAllAds();
-  }
-}, 1000);
+function runCountdown(id,time,callback){
+  let t=time;
+  const el=document.getElementById(id);
+  const num=el.querySelector("strong");
+  const interval=setInterval(()=>{
+    t--; num.textContent=t;
+    if(t<=0){clearInterval(interval);
+      el.innerHTML='<span class="icon">✅</span><span>Selesai!</span>';
+      el.classList.add('completed');
+      callback();
+    }
+  },1000);
+}
 
-// Countdown untuk Ad 2
-let countdown2 = 12;
-const timer2Interval = setInterval(() => {
-  countdown2--;
-  document.getElementById('timer2').textContent = countdown2;
-  if (countdown2 <= 0) {
-    clearInterval(timer2Interval);
-    document.getElementById('countdown2').innerHTML = '<span class="icon">✅</span><span>Selesai!</span>';
-    document.getElementById('countdown2').classList.add('completed');
-    ad2Done = true;
-    checkAllAds();
-  }
-}, 1000);
+runCountdown("countdown1",10,()=>{ad1Done=true;checkAllAds();});
+runCountdown("countdown2",12,()=>{ad2Done=true;checkAllAds();});
+runCountdown("countdown3",8,()=>{ad3Done=true;checkAllAds();});
 
-// Countdown untuk Ad 3
-let countdown3 = 8;
-const timer3Interval = setInterval(() => {
-  countdown3--;
-  document.getElementById('timer3').textContent = countdown3;
-  if (countdown3 <= 0) {
-    clearInterval(timer3Interval);
-    document.getElementById('countdown3').innerHTML = '<span class="icon">✅</span><span>Selesai!</span>';
-    document.getElementById('countdown3').classList.add('completed');
-    ad3Done = true;
-    checkAllAds();
-  }
-}, 1000);
-
-// Check jika semua iklan sudah selesai
-function checkAllAds() {
-  if (ad1Done && ad2Done && ad3Done && !allAdsViewed) {
-    allAdsViewed = true;
+function checkAllAds(){
+  if(ad1Done&&ad2Done&&ad3Done&&!allAdsViewed){
+    allAdsViewed=true;
     enableTimerButtons();
   }
 }
 
-// Enable tombol timer setelah semua iklan selesai
-function enableTimerButtons() {
-  times.forEach((time, i) => {
-    const btn = document.createElement("button");
-    btn.className = "timer-btn";
-    btn.textContent = `${time} detik`;
-    btn.onclick = () => startTimer(btn, time, i);
+function enableTimerButtons(){
+  times.forEach((time,i)=>{
+    const btn=document.createElement("button");
+    btn.className="timer-btn";
+    btn.textContent=`${time} detik`;
+    btn.onclick=()=>startTimer(btn,time,i);
     timersDiv.appendChild(btn);
   });
 }
 
-function startTimer(btn, time, i) {
-  if (btn.disabled) return;
-  
-  // Disable semua tombol
-  document.querySelectorAll('.timer-btn').forEach(b => b.disabled = true);
-  
-  let remaining = time;
-  const interval = setInterval(() => {
+function startTimer(btn,time,i){
+  if(btn.classList.contains("running"))return;
+  btn.classList.add("running");
+  let remaining=time;
+  const interval=setInterval(()=>{
     remaining--;
-    btn.textContent = `${remaining}s`;
-    if (remaining <= 0) {
+    btn.textContent=`${remaining}s`;
+    if(remaining<=0){
       clearInterval(interval);
-      btn.textContent = "BUKA";
-      btn.disabled = false;
+      btn.textContent="BUKA";
       btn.classList.add('active');
-      btn.onclick = () => {
-        if (i === correctIndex) {
-          window.location.href = `safelink2.html#dl=${encoded}`;
-        } else {
+      btn.onclick=()=>{
+        if(i===correctIndex){
+          window.location.href=`safelink2.html#dl=${encoded}`;
+        }else{
           showOverlay();
-          window.open(smartLink, "_blank");
+          window.open(smartLink,"_blank");
         }
       };
     }
-  }, 1000);
+  },1000);
 }
 
-function showOverlay() {
-  document.getElementById("adOverlay").style.display = "block";
-  
-  let overlayTimer = 5;
-  const closeBtn = document.getElementById('closeOverlayBtn');
-  
-  const overlayInterval = setInterval(() => {
+function showOverlay(){
+  document.getElementById("adOverlay").style.display="block";
+  let overlayTimer=5;
+  const closeBtn=document.getElementById('closeOverlayBtn');
+  const overlayInterval=setInterval(()=>{
     overlayTimer--;
-    document.getElementById('overlayTimer').textContent = overlayTimer;
-    if (overlayTimer <= 0) {
+    document.getElementById('overlayTimer').textContent=overlayTimer;
+    if(overlayTimer<=0){
       clearInterval(overlayInterval);
-      closeBtn.disabled = false;
-      closeBtn.innerHTML = '✅ Tutup Iklan';
-      closeBtn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+      closeBtn.disabled=false;
+      closeBtn.innerHTML='✅ Tutup Iklan';
+      closeBtn.style.background='linear-gradient(135deg,#10b981 0%,#059669 100%)';
     }
-  }, 1000);
+  },1000);
 }
 
-function closeOverlay() {
-  document.getElementById("adOverlay").style.display = "none";
+function closeOverlay(){
+  document.getElementById("adOverlay").style.display="none";
 }
-
-document.getElementById('closeOverlayBtn').onclick = closeOverlay;
+document.getElementById('closeOverlayBtn').onclick=closeOverlay;
 </script>
-
 </body>
 </html>
