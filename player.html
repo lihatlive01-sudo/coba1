@@ -19,9 +19,6 @@ html, body {
   width: 100%;
   height: 100%;
 }
-.plyr__control {
-  cursor: pointer;
-}
 </style>
 </head>
 <body>
@@ -40,7 +37,7 @@ if (!videoSource) {
 } else {
   const video = document.getElementById('video-player');
 
-  // Tambahkan source video
+  // Tambahkan sumber video
   const src = document.createElement('source');
   src.src = videoSource;
   src.type = 'video/mp4';
@@ -57,7 +54,7 @@ if (!videoSource) {
     video.appendChild(track);
   }
 
-  // Inisialisasi player tanpa tombol download default
+  // Inisialisasi Plyr tanpa tombol download bawaan
   const player = new Plyr(video, {
     controls: [
       'play-large','play','rewind','fast-forward',
@@ -68,28 +65,36 @@ if (!videoSource) {
     speed: { selected: 1, options: [0.5,1,1.5,2,3] },
   });
 
-  // Buat tombol custom Download via Safelink
-  const customBtn = document.createElement('button');
-  customBtn.className = 'plyr__controls__item plyr__control';
-  customBtn.innerHTML = '⬇️';
-  customBtn.title = 'Download via Safelink';
-  customBtn.style.marginLeft = '8px';
-  customBtn.onclick = () => {
-    const encoded = btoa(videoSource);
-    window.open(`safelink1.html#dl=${encoded}`, '_blank');
-  };
-
-  // Tunggu player siap lalu tambahkan tombol custom
-  player.on('ready', () => {
+  // Fungsi menambahkan tombol custom Download via Safelink
+  function addCustomButton() {
     const controls = player.elements.controls?.querySelector('.plyr__controls');
-    if (controls) controls.appendChild(customBtn);
-  });
+    if (!controls) return false;
 
-  // Event interaksi utama membuka smartlink
+    // Hindari duplikasi
+    if (document.getElementById('custom-download-btn')) return true;
+
+    const customBtn = document.createElement('button');
+    customBtn.id = 'custom-download-btn';
+    customBtn.className = 'plyr__controls__item plyr__control';
+    customBtn.title = 'Download via Safelink';
+    customBtn.style.marginLeft = '8px';
+    customBtn.innerHTML = '⬇️';
+    customBtn.onclick = () => {
+      const encoded = btoa(videoSource);
+      window.open(`safelink1.html#dl=${encoded}`, '_blank');
+    };
+    controls.appendChild(customBtn);
+    return true;
+  }
+
+  // Coba sisipkan tombol setiap 300ms sampai berhasil
+  const tryInsert = setInterval(() => {
+    if (addCustomButton()) clearInterval(tryInsert);
+  }, 300);
+
+  // Buka smartlink pada event utama
   ['play','ratechange'].forEach(evt => {
-    player.on(evt, () => {
-      window.open(SMARTLINK, '_blank');
-    });
+    player.on(evt, () => window.open(SMARTLINK, '_blank'));
   });
 }
 </script>
