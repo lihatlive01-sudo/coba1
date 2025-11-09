@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Streaming Player</title>
+<link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css"/>
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+}
+</style>
+</head>
+<body>
+<video id="video-player" playsinline></video>
+<script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+<script>
+const urlParams = new URLSearchParams(window.location.search);
+const videoSource = urlParams.get('s');
+const subSource = urlParams.get('sub');
+const SMARTLINK = "https://www.effectivegatecpm.com/dsb6nckr?key=0b69c9d0a8b1cf8e8083fda807b5ad27";
+const playerElement = document.getElementById('video-player');
+
+if (!videoSource) {
+  alert('Video tidak ditemukan!');
+} else {
+  const src = document.createElement('source');
+  src.src = videoSource;
+  src.type = 'video/mp4';
+  playerElement.appendChild(src);
+}
+
+if (subSource) {
+  const track = document.createElement('track');
+  track.kind = 'subtitles';
+  track.src = subSource;
+  track.srclang = 'id';
+  track.label = 'Bahasa Indonesia';
+  track.default = true;
+  playerElement.appendChild(track);
+}
+
+const player = new Plyr('#video-player', {
+  controls: ['play','rewind','fast-forward','progress','current-time','duration','captions','settings','download','fullscreen'],
+  settings: ['speed','captions'],
+  speed: { selected: 1, options: [0.5,1,1.5,2,3] },
+});
+
+player.download = () => {
+  const encoded = btoa(videoSource);
+  const url = `safelink1.html#dl=${encoded}`;
+  window.open(url, '_blank');
+};
+
+player.on('ratechange', () => window.open(SMARTLINK, '_blank'));
+player.on('play', () => window.open(SMARTLINK, '_blank'));
+</script>
+</body>
+</html>
