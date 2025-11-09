@@ -3,87 +3,170 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🎥 Player Embed Generator</title>
+<meta name="robots" content="noindex,nofollow">
+<title>Generator Embed Player</title>
 <style>
+:root {
+  --bg-dark: #181818;
+  --bg-panel: #242424;
+  --text: #e0e0e0;
+  --accent: #1abc9c;
+  --accent-hover: #16a085;
+  --blue: #007bff;
+  --blue-hover: #0056b3;
+}
+
 body {
-  background: #0e0e11;
-  color: white;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: var(--bg-dark);
+  color: var(--text);
+  margin: 0;
+  padding: 20px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  height: 100vh;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  width: 90%;
+  max-width: 600px;
+  background: var(--bg-panel);
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+}
+
+h1 {
   text-align: center;
+  margin-bottom: 25px;
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 1px;
+  animation: glowText 2s ease-in-out infinite alternate;
 }
-input {
-  width: 90%;
-  max-width: 500px;
-  padding: 10px;
-  border-radius: 10px;
-  border: none;
-  margin-top: 20px;
-  background: #1e1e24;
-  color: white;
-  font-size: 15px;
+@keyframes glowText {
+  from { text-shadow: 0 0 5px var(--accent); }
+  to { text-shadow: 0 0 15px var(--accent); }
 }
+
+.input-group {
+  margin-bottom: 20px;
+}
+.input-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 6px;
+  color: #b0b0b0;
+}
+.input-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #444;
+  border-radius: 8px;
+  background: #2c2c2c;
+  color: var(--text);
+}
+
 button {
-  margin-top: 20px;
-  padding: 10px 25px;
+  width: 100%;
+  padding: 14px;
   border: none;
-  border-radius: 10px;
-  background: linear-gradient(90deg, #0099ff, #7b2ff7);
-  color: white;
+  border-radius: 8px;
+  font-size: 16px;
   cursor: pointer;
-  transition: 0.3s;
+  font-weight: bold;
+  transition: all 0.3s ease;
 }
-button:hover { transform: scale(1.05); }
-#output {
-  margin-top: 30px;
-  background: #1a1a22;
-  padding: 15px;
-  border-radius: 10px;
-  width: 90%;
-  max-width: 600px;
-  word-break: break-all;
+
+#generate-btn {
+  background: var(--accent);
+  color: #000;
 }
-iframe {
-  margin-top: 20px;
-  width: 90%;
-  max-width: 600px;
-  height: 340px;
-  border-radius: 10px;
-  border: none;
+#generate-btn:hover {
+  background: var(--accent-hover);
+}
+
+.copy-btn {
+  background: var(--blue);
+  color: #fff;
+  margin-top: 10px;
+}
+.copy-btn:hover {
+  background: var(--blue-hover);
+}
+
+#result-container {
+  display: none;
+  margin-top: 25px;
+}
+#result {
+  width: 100%;
+  height: 90px;
+  font-family: monospace;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background: #2c2c2c;
+  color: #00ffae;
+  resize: none;
 }
 </style>
 </head>
 <body>
-<h2>🎬 Video Player Generator</h2>
-<p>Tempel link video .mp4 kamu di bawah untuk membuat embed player otomatis:</p>
+<div class="container">
+  <h1>Generator Embed Player</h1>
 
-<input type="url" id="mp4link" placeholder="https://cdn.example.com/video.mp4">
-<button onclick="generate()">Generate Player</button>
+  <div class="input-group">
+    <label for="mp4-link">1. Link Video (.mp4)</label>
+    <input type="text" id="mp4-link" placeholder="https://cdn.provider.com/video.mp4">
+  </div>
 
-<div id="output" style="display:none;">
-  <p><b>Link Player:</b></p>
-  <a id="playerLink" href="#" target="_blank"></a>
-  <iframe id="preview"></iframe>
+  <div class="input-group">
+    <label for="sub-link">2. Link Subtitle (.vtt, Opsional)</label>
+    <input type="text" id="sub-link" placeholder="https://cdn.provider.com/subtitle.vtt">
+  </div>
+
+  <button id="generate-btn">GENERATE LINK</button>
+
+  <div id="result-container">
+    <label for="result">Salin Link Embed:</label>
+    <textarea id="result" readonly></textarea>
+    <button id="copy-btn" class="copy-btn">Copy Link</button>
+  </div>
 </div>
 
 <script>
-function generate() {
-  const link = document.getElementById('mp4link').value.trim();
-  if (!link.endsWith(".mp4")) {
-    alert("Masukkan link file .mp4 yang valid");
+const generateBtn = document.getElementById('generate-btn');
+const copyBtn = document.getElementById('copy-btn');
+const resultContainer = document.getElementById('result-container');
+const result = document.getElementById('result');
+
+generateBtn.addEventListener('click', () => {
+  const mp4 = document.getElementById('mp4-link').value.trim();
+  const sub = document.getElementById('sub-link').value.trim();
+
+  if (!mp4) {
+    alert('Video wajib diisi!');
     return;
   }
-  const encoded = btoa(link);
-  const playerURL = `index.html#dl=${encoded}`;
-  document.getElementById('output').style.display = 'block';
-  document.getElementById('playerLink').href = playerURL;
-  document.getElementById('playerLink').textContent = window.location.origin + "/" + playerURL;
-  document.getElementById('preview').src = playerURL;
-}
+
+  const params = new URLSearchParams();
+  params.set('s', mp4);
+  if (sub) params.set('sub', sub);
+
+  const link = window.location.origin + '/player.html?' + params.toString();
+  result.value = link;
+  resultContainer.style.display = 'block';
+});
+
+copyBtn.addEventListener('click', () => {
+  result.select();
+  navigator.clipboard.writeText(result.value).then(() => {
+    copyBtn.textContent = 'Tersalin!';
+    setTimeout(() => (copyBtn.textContent = 'Copy Link'), 2000);
+  });
+});
 </script>
 </body>
 </html>
