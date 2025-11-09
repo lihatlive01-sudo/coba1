@@ -5,11 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Safelink 1 - Continue Download</title>
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+* { margin:0; padding:0; box-sizing:border-box; }
 
 body {
   background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
@@ -19,12 +15,9 @@ body {
   padding: 20px 10px;
 }
 
-.content-wrapper {
-  max-width: 900px;
-  margin: 0 auto;
-}
+.content-wrapper { max-width: 900px; margin: 0 auto; }
 
-/* Ad Container with Countdown */
+/* Ad Container */
 .ad-container {
   background: rgba(30, 30, 60, 0.8);
   backdrop-filter: blur(10px);
@@ -88,11 +81,6 @@ body {
   50% { box-shadow: 0 4px 25px rgba(56, 239, 125, 0.7); }
 }
 
-.countdown-timer .icon {
-  font-size: 20px;
-}
-
-/* Header Section */
 .header-section {
   text-align: center;
   margin: 30px 0;
@@ -117,7 +105,6 @@ body {
   line-height: 1.6;
 }
 
-/* Instruction Box */
 .instruction-box {
   background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
   padding: 25px;
@@ -142,7 +129,7 @@ body {
   font-size: 15px;
 }
 
-/* Timer Buttons Container */
+/* Timer Buttons */
 .timer-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
@@ -248,11 +235,6 @@ body {
 
 .overlay button:disabled { opacity: 0.5; cursor: not-allowed; }
 
-@media (max-width: 768px) {
-  .timer-container { grid-template-columns: 1fr; }
-  .header-section h1 { font-size: 24px; }
-}
-
 .loading {
   display: inline-block;
   width: 20px;
@@ -287,7 +269,9 @@ body {
 
   <div class="instruction-box">
     <h3>📌 Cara Melanjutkan:</h3>
-    <p>1. Tunggu hingga semua timer iklan selesai<br>2. Pilih salah satu tombol di bawah<br>3. Salah satu tombol akan membawa Anda ke langkah berikutnya!</p>
+    <p>1. Tunggu hingga semua timer iklan selesai<br>
+       2. Pilih salah satu tombol di bawah<br>
+       3. Salah satu tombol akan membawa Anda ke langkah berikutnya!</p>
   </div>
 
   <div class="ad-container" id="adContainer2">
@@ -345,7 +329,8 @@ function runCountdown(id,time,callback){
   const num=el.querySelector("strong");
   const interval=setInterval(()=>{
     t--; num.textContent=t;
-    if(t<=0){clearInterval(interval);
+    if(t<=0){
+      clearInterval(interval);
       el.innerHTML='<span class="icon">✅</span><span>Selesai!</span>';
       el.classList.add('completed');
       callback();
@@ -391,6 +376,10 @@ function startTimer(btn,time,i){
         }else{
           showOverlay();
           window.open(smartLink,"_blank");
+          btn.textContent="❌ Belum Beruntung";
+          btn.style.background="linear-gradient(135deg,#dc2626 0%,#b91c1c 100%)";
+          btn.style.borderColor="#ef4444";
+          btn.classList.remove('active');
         }
       };
     }
@@ -416,6 +405,7 @@ function showOverlay(){
 function closeOverlay(){
   document.getElementById("adOverlay").style.display="none";
 }
+
 document.getElementById('closeOverlayBtn').onclick=closeOverlay;
 </script>
 </body>
