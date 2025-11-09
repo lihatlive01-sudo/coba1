@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎥 Player Embed Generator</title>
+<style>
+body {
+  background: #0e0e11;
+  color: white;
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+}
+input {
+  width: 90%;
+  max-width: 500px;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  margin-top: 20px;
+  background: #1e1e24;
+  color: white;
+  font-size: 15px;
+}
+button {
+  margin-top: 20px;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #0099ff, #7b2ff7);
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+button:hover { transform: scale(1.05); }
+#output {
+  margin-top: 30px;
+  background: #1a1a22;
+  padding: 15px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 600px;
+  word-break: break-all;
+}
+iframe {
+  margin-top: 20px;
+  width: 90%;
+  max-width: 600px;
+  height: 340px;
+  border-radius: 10px;
+  border: none;
+}
+</style>
+</head>
+<body>
+<h2>🎬 Video Player Generator</h2>
+<p>Tempel link video .mp4 kamu di bawah untuk membuat embed player otomatis:</p>
+
+<input type="url" id="mp4link" placeholder="https://cdn.example.com/video.mp4">
+<button onclick="generate()">Generate Player</button>
+
+<div id="output" style="display:none;">
+  <p><b>Link Player:</b></p>
+  <a id="playerLink" href="#" target="_blank"></a>
+  <iframe id="preview"></iframe>
+</div>
+
+<script>
+function generate() {
+  const link = document.getElementById('mp4link').value.trim();
+  if (!link.endsWith(".mp4")) {
+    alert("Masukkan link file .mp4 yang valid");
+    return;
+  }
+  const encoded = btoa(link);
+  const playerURL = `index.html#dl=${encoded}`;
+  document.getElementById('output').style.display = 'block';
+  document.getElementById('playerLink').href = playerURL;
+  document.getElementById('playerLink').textContent = window.location.origin + "/" + playerURL;
+  document.getElementById('preview').src = playerURL;
+}
+</script>
+</body>
+</html>
