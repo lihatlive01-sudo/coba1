@@ -21,19 +21,20 @@ html, body {
 }
 
 /* Style untuk tombol download custom */
-#custom-download-btn {
+.plyr__controls #custom-download-btn {
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
   background: #00b3ff !important;
   color: white !important;
-  font-size: 18px;
+  font-size: 14px;
   padding: 8px 12px !important;
-  border-radius: 4px;
+  border-radius: 3px;
   cursor: pointer;
   transition: background 0.3s;
+  margin-left: 4px;
 }
-#custom-download-btn:hover {
+.plyr__controls #custom-download-btn:hover {
   background: #0095d9 !important;
 }
 
@@ -88,74 +89,101 @@ if (!videoSource) {
     ],
     settings: ['speed','captions'],
     speed: { selected: 1, options: [0.5,1,1.5,2,3] },
-    disableContextMenu: true, // Disable right-click menu
+    disableContextMenu: true,
   });
 
   // Fungsi menambahkan tombol custom Download via Safelink
   function addCustomButton() {
-    const controls = player.elements.controls?.querySelector('.plyr__controls');
-    if (!controls) return false;
+    // Coba beberapa selector berbeda
+    let controls = document.querySelector('.plyr__controls');
+    
+    if (!controls) {
+      console.warn('❌ Element .plyr__controls tidak ditemukan');
+      return false;
+    }
 
     // Hindari duplikasi
-    if (document.getElementById('custom-download-btn')) return true;
+    if (document.getElementById('custom-download-btn')) {
+      console.log('ℹ️ Tombol download sudah ada');
+      return true;
+    }
+
+    console.log('🔧 Membuat tombol download...');
 
     const customBtn = document.createElement('button');
     customBtn.id = 'custom-download-btn';
     customBtn.className = 'plyr__controls__item plyr__control';
     customBtn.type = 'button';
+    customBtn.setAttribute('data-plyr', 'download');
     customBtn.setAttribute('aria-label', 'Download via Safelink');
     customBtn.title = 'Download via Safelink';
-    customBtn.innerHTML = '⬇️ Download';
+    customBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 18 18"><path d="M9 13l-4-4h3V3h2v6h3l-4 4zm-7 2h14v2H2v-2z" fill="currentColor"/></svg>';
     
     customBtn.onclick = (e) => {
       e.preventDefault();
       e.stopPropagation();
+      console.log('🔽 Tombol download diklik');
       const encoded = btoa(videoSource);
       window.open(`safelink1.html#dl=${encoded}`, '_blank');
     };
     
-    // Sisipkan sebelum tombol fullscreen
-    const fullscreenBtn = controls.querySelector('[data-plyr="fullscreen"]');
-    if (fullscreenBtn) {
-      controls.insertBefore(customBtn, fullscreenBtn);
+    // Cari tempat untuk insert tombol
+    const rightControls = controls.querySelector('.plyr__controls__item:last-child');
+    
+    if (rightControls) {
+      controls.insertBefore(customBtn, rightControls);
+      console.log('✅ Tombol download berhasil ditambahkan sebelum elemen terakhir!');
     } else {
       controls.appendChild(customBtn);
+      console.log('✅ Tombol download berhasil ditambahkan di akhir!');
     }
     
-    console.log('✅ Tombol download custom berhasil ditambahkan!');
     return true;
   }
 
-  // Event listener saat player sudah siap
-  player.on('ready', () => {
-    console.log('Player ready, menambahkan tombol download...');
-    setTimeout(() => {
-      addCustomButton();
-    }, 500);
-  });
-
-  // Backup: Coba sisipkan tombol setiap 500ms sampai berhasil (max 10 detik)
-  let attempts = 0;
-  const maxAttempts = 20;
-  const tryInsert = setInterval(() => {
-    attempts++;
-    if (addCustomButton() || attempts >= maxAttempts) {
-      clearInterval(tryInsert);
-      if (attempts >= maxAttempts) {
-        console.warn('⚠️ Gagal menambahkan tombol download setelah 10 detik');
+  // Tambahkan observer untuk mendeteksi saat controls sudah siap
+  const observer = new MutationObserver((mutations) => {
+    const controls = document.querySelector('.plyr__controls');
+    if (controls && !document.getElementById('custom-download-btn')) {
+      console.log('👀 Controls terdeteksi oleh observer');
+      if (addCustomButton()) {
+        observer.disconnect();
       }
     }
-  }, 500);
+  });
 
-  // Buka smartlink pada event utama (hanya sekali)
-  let smartlinkOpened = false;
-  ['play','ratechange'].forEach(evt => {
-    player.on(evt, () => {
-      if (!smartlinkOpened) {
-        window.open(SMARTLINK, '_blank');
-        smartlinkOpened = true;
+  // Mulai observe perubahan DOM
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+
+  // Event listener saat player sudah siap
+  player.on('ready', () => {
+    console.log('▶️ Player ready');
+    
+    // Coba tambahkan tombol setelah delay
+    setTimeout(() => {
+      console.log('⏱️ Mencoba menambahkan tombol...');
+      if (addCustomButton()) {
+        observer.disconnect(); // Stop observer jika berhasil
       }
-    });
+    }, 100);
+    
+    // Backup dengan delay lebih lama
+    setTimeout(() => {
+      if (!document.getElementById('custom-download-btn')) {
+        console.log('⏱️ Percobaan kedua...');
+        if (addCustomButton()) {
+          observer.disconnect();
+        }
+      }
+    }, 1000);
+  });
+
+  // Buka smartlink pada event utama
+  ['play','ratechange'].forEach(evt => {
+    player.on(evt, () => window.open(SMARTLINK, '_blank'));
   });
 
   // Disable right-click pada video
