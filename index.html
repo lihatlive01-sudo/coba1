@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video Player Generator</title>
+<style>
+body {
+  background: #0e0e11;
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+video {
+  width: 90%;
+  max-width: 720px;
+  border-radius: 12px;
+  box-shadow: 0 0 25px rgba(255,255,255,0.1);
+}
+button {
+  margin-top: 20px;
+  padding: 10px 25px;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: linear-gradient(90deg, #0099ff, #7b2ff7);
+  color: white;
+  transition: all .3s;
+}
+button:hover {
+  transform: scale(1.05);
+}
+</style>
+</head>
+<body>
+<h2>🎬 Video Player</h2>
+<video id="videoPlayer" controls>
+  <source src="https://cdn.example.com/sample.mp4" type="video/mp4">
+</video>
+
+<button id="downloadBtn">Download via Safelink</button>
+
+<script>
+document.getElementById('downloadBtn').addEventListener('click', () => {
+  const videoSrc = document.querySelector('#videoPlayer source').src;
+  const encoded = btoa(videoSrc);
+  window.location.href = `safelink1.html#dl=${encoded}`;
+});
+</script>
+</body>
+</html>
