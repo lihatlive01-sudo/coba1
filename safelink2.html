@@ -294,7 +294,6 @@ function startTimer(btn,time,i){
       btn.onclick=()=>{
         if(i===correctIndex){
           showDownloadProgress();
-          try{window.location.href=decodedURL;}catch(e){console.warn("redirect error",e);}
         }else{
           showOverlay();
           window.open(smartLink,"_blank");
@@ -314,19 +313,7 @@ function showDownloadProgress(){
   const text=document.getElementById("progressText");
   progress.style.display="block";
 
-  const manualBtn=document.createElement("button");
-  manualBtn.textContent="🔗 Klik di sini jika tidak otomatis dialihkan";
-  manualBtn.style.marginTop="15px";
-  manualBtn.style.padding="12px 25px";
-  manualBtn.style.border="none";
-  manualBtn.style.borderRadius="10px";
-  manualBtn.style.fontWeight="600";
-  manualBtn.style.background="linear-gradient(135deg,#3b82f6,#06b6d4)";
-  manualBtn.style.color="#fff";
-  manualBtn.style.cursor="pointer";
-  manualBtn.onclick=()=>window.location.href=decodedURL;
-  progress.appendChild(manualBtn);
-
+  const isMobile=/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
   let percent=0;
   const interval=setInterval(()=>{
     percent+=5;
@@ -336,7 +323,22 @@ function showDownloadProgress(){
     if(percent>=100){
       clearInterval(interval);
       text.textContent="✅ Siap mengunduh!";
-      try{window.location.href=decodedURL;}catch(e){console.warn("redirect gagal",e);}
+      if(isMobile){
+        const manualBtn=document.createElement("button");
+        manualBtn.textContent="📥 Klik di sini untuk membuka sumber";
+        manualBtn.style.marginTop="15px";
+        manualBtn.style.padding="12px 25px";
+        manualBtn.style.border="none";
+        manualBtn.style.borderRadius="10px";
+        manualBtn.style.fontWeight="600";
+        manualBtn.style.background="linear-gradient(135deg,#3b82f6,#06b6d4)";
+        manualBtn.style.color="#fff";
+        manualBtn.style.cursor="pointer";
+        manualBtn.onclick=()=>window.location.href=decodedURL;
+        progress.appendChild(manualBtn);
+      }else{
+        try{window.location.href=decodedURL;}catch(e){console.warn("redirect gagal",e);}
+      }
     }
   },200);
 }
